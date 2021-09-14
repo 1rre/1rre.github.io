@@ -44,4 +44,6 @@ case class Redstone(canvas: html.Canvas) extends Project("Minecraft", 250d) {
     cnt += 1
     cnt %= text.size
   }
+
+  render()
 }
