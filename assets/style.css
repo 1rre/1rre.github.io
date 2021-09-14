@@ -37,7 +37,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 75%;
+  width: 90%;
 }
 .project-box {
   position: relative;
