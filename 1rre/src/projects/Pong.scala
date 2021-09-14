@@ -84,12 +84,12 @@ case class Pong(canvas: html.Canvas) extends Project("Pong", 25d) {
 
     def bounceX(variant: Double): Unit = {
       val diff = math.pow(variant * BounceScale, 5)
-      dy += diff * dy.sign * 0.33
+      dy += diff * dy.sign * 0.1
       dx *= -1
     }
     def bounceY(variant: Double): Unit = {
       val diff = math.pow(variant * BounceScale, 5)
-      dx += diff * dx.sign * 0.33
+      dx += diff * dx.sign * 0.1
       dy *= -1
     }
 
