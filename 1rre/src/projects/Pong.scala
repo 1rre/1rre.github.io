@@ -162,7 +162,7 @@ case class Pong(canvas: html.Canvas) extends Project("Pong", 25d) {
     context.textBaseline = "middle"
     context.font = Font
     context.fillStyle = TextUpperColour
-    context.fillText("DISTRUBUTED", Width/2d, Height/2d - FontSize)
+    context.fillText("DISTRIBUTED", Width/2d, Height/2d - FontSize)
     context.fillStyle = TextLowerColour
     context.fillText("PONG", Width/2d, Height/2d + FontSize)
   }
