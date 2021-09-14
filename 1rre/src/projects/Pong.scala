@@ -12,6 +12,11 @@ case class Pong(canvas: html.Canvas) extends Project("Pong", 25d) {
   final val PaddleMax = 210 - PaddleLength
   final val BounceScale = 1d/28
 
+  final val FontSize = 20
+  final val Font = s"${FontSize}px 'Lexend Exa', sans-serif"
+  final val TextUpperColour = "#1A50F7"
+  final val TextLowerColour = "#E04747"
+
 
   abstract class Paddle {
     def x: Double
@@ -152,8 +157,19 @@ case class Pong(canvas: html.Canvas) extends Project("Pong", 25d) {
 
   def drawBall(): Unit = {}
 
+  def drawText(): Unit = {
+    context.textAlign = "center"
+    context.textBaseline = "middle"
+    context.font = Font
+    context.fillStyle = TextUpperColour
+    context.fillText("DISTRUBUTED", Width/2d, Height/2d - FontSize)
+    context.fillStyle = TextLowerColour
+    context.fillText("PONG", Width/2d, Height/2d + FontSize)
+  }
+
   def render(): Unit = {
     drawBackground()
+    drawText()
     drawPaddles()
     Ball.draw()
   }
