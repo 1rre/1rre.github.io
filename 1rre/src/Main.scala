@@ -3,6 +3,6 @@ import projects._
 
 object Main extends App {
   val compiler = Compiler(
-    document.getElementById("compiler-terminal").asInstanceOf[html.Div]
+    document.getElementById("compiler-box").asInstanceOf[html.Canvas]
   )
 }
