@@ -4,3 +4,4 @@ out/
 .metals/
 .scalafmt.conf
 Scalayout/
+test.html
