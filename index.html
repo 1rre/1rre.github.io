@@ -6,62 +6,76 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-      body {
-        background-color: #e5e5e5;
-        font-family: 'Lexend Exa', sans-serif;
-        overflow: hidden;
-        width: 100vw;
-        height: 100vh;
-      }
-      .link-container {
-        display: flex;
-        flex-direction: row;
-      }
-      .link_icon {
-        width: 60px;
-        height: 60px;
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      .link_icon:hover {
-        cursor: pointer;
-        filter: invert(0.25);
-      }
-      .text-div {
-        text-align: center;
-        margin: 20px;
-        line-height: 40px;
-      }
-      .web-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-      }
-      .profile-img {
-        width: 240px;
-        height: 240px;
-        border-radius: 50%;
-        margin: 40px;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
     <div class="web-container">
       <div class="text-div" style="font-size: xxx-large;">HELLO</div>
       <div class="text-div" style="font-size: large;">
-        Website still under construction<br>
-        In the meantime:<br>
-        Check out my profiles<br>
+        Check out my projects
+      </div>
+      <div class="project-container">
+        <div class="project-box">
+          <a class="overlay-link" href="https://github.com/1rre/compiler"></a>
+          <div class="project-inner">
+            <div id="compiler-status-bar">
+              <div style="width: 5%;"></div>
+              Compiler
+              <div style="width: 45%;"></div>
+              <div id="compiler-close"><div>X</div></div>
+            </div>
+            <div id="compiler-terminal">
+              abcdefghijklmnopqrstuvwxyz12345<br>
+              2<br>
+              3<br>
+              4<br>
+              5<br>
+              6<br>
+              7<br>
+              8<br>
+              9<br>
+              10<br>
+              11<br>
+              12<br>
+              13<br>
+            </div>
+          </div>
+        </div>
+        <a class="project-box" id="cpu-link" href="https://github.com/1rre/MIPS_CPU">
+          <div class="project-inner">
+            Mips CPU
+          </div>
+        </a>
+        <a class="project-box" id="redstone-link" href="https://github.com/1rre/MinecraftPlugins">
+          <div class="project-inner">
+            Redstone ICs
+          </div>
+        </a>
+        <a class="project-box" id="pong-link" href="https://github.com/1rre/Pong">
+          <div class="project-inner">
+          Pong
+          </div>
+        </a>
+        <a class="project-box" id="rover-link" href="https://github.com/1rre/exploring_uranus">
+          <div class="project-inner">
+            EEE Rover
+          </div>
+        </a>
+        <a class="project-box" id="script-link" href="https://github.com/1rre/RoverScript">
+          <div class="project-inner">
+            RoverScript
+          </div>
+        </a>
+      </div>
+      <div class="text-div" style="font-size: large;">
+        Check out my profiles
       </div>
       <div class="link-container">
-        <a style="background-image: url(github.svg);" class="link_icon" href="https://github.com/1rre"></a>
-        <a style="background-image: url(linkedin.svg);" class="link_icon" href="https://www.linkedin.com/in/timothy-moores/"></a>
-        <a style="background-image: url(maildotru.svg);" class="link_icon" href="mailto:info@tmoor.es"></a>
+        <a style="background-image: url(assets/github.svg);" class="link_icon" href="https://github.com/1rre"></a>
+        <a style="background-image: url(assets/linkedin.svg);" class="link_icon" href="https://www.linkedin.com/in/timothy-moores/"></a>
+        <a style="background-image: url(assets/maildotru.svg);" class="link_icon" href="mailto:info@tmoor.es"></a>
       </div>
     </div>
+    <script type="text/javascript" src="assets/out.js"></script>
   </body>
 </html>
