@@ -56,7 +56,7 @@ body {
   height: 240px;
   margin: -2px;
   padding: 2px;
-  clip-path: inset(2px 242px 2px 242px round 15px);
+  clip-path: inset(2px round 15px);
 }
 .overlay-link {
   position: absolute;
