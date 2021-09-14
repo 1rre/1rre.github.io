@@ -4,7 +4,7 @@ import util.Random
 
 import es.tmoor.scalayout.element.canvas.Context
 
-case class CPU(canvas: html.Canvas) extends Project("MIPS CPU", 100d) {
+case class CPU(canvas: html.Canvas) extends Project("MIPS CPU", 25d) {
   final val BackgroundColour = "#3b5b6c"
   final val PcbSideLength = 120
   final val PcbX = 60
@@ -44,10 +44,10 @@ case class CPU(canvas: html.Canvas) extends Project("MIPS CPU", 100d) {
     }
     def draw(): Unit = {
       context.beginPath()
-      if (pulsePosition >= 1) pulsePosition = 0
-      else if (pulsePosition > 0 || Random.nextDouble() > 0.9)
-        pulsePosition = math.min(1, pulsePosition + PulseIncrement)
+      if (pulsePosition > 1) pulsePosition = 0
       context.strokeStyle = gradient
+      if (pulsePosition > 0 || Random.nextDouble() > 0.975)
+        pulsePosition = pulsePosition + PulseIncrement
       context.moveTo(x1, y1)
       context.lineTo(x2, y2)
       context.stroke()
