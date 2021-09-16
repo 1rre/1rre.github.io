@@ -6,13 +6,13 @@ import es.tmoor.scalayout.element.canvas.Context
 
 case class CPU(canvas: html.Canvas) extends Project("MIPS CPU", 25d) {
   final val BackgroundColour = "#3b5b6c"
-  final val PcbSideLength = 120
-  final val PcbX = 60
-  final val PcbY = 60
+  final val PcbSideLength = Width / 2
+  final val PcbX = Width / 4
+  final val PcbY = Width / 4
   final val PcbColour = "#556C23"
-  final val HeatSinkSideLength = PcbSideLength - 20
-  final val HeatSinkX = PcbX + 10
-  final val HeatSinkY = PcbY + 10
+  final val HeatSinkSideLength = PcbSideLength - Width / 12
+  final val HeatSinkX = PcbX + Width / 24
+  final val HeatSinkY = PcbY + Height / 24
   final val HeatSinkCornerR = 10
   final val HeatSinkColour = "#A8B0B5"
   final val LabelFontSize = 24

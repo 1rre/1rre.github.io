@@ -17,8 +17,8 @@ object Main extends App {
   val rover = Rover(
     document.getElementById("rover-box").asInstanceOf[html.Canvas]
   )
-  val scalayout = Scalayout(
-    document.getElementById("scalayout-box").asInstanceOf[html.Canvas]
+  val parser = Parser(
+    document.getElementById("parser-box").asInstanceOf[html.Canvas]
   )
   val website = Website(
     document.getElementById("website-box").asInstanceOf[html.Canvas]
