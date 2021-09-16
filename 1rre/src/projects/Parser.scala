@@ -98,4 +98,6 @@ case class Parser(canvas: html.Canvas) extends Project("Parser", 100d) {
     drawText()
     drawBoxes()
   }
+
+  render()
 }
