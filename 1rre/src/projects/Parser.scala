@@ -3,7 +3,7 @@ package projects
 import org.scalajs.dom.{html, raw}
 import util.Random
 
-case class Parser(canvas: html.Canvas) extends Project("Parser", 100d) {
+case class Parser(canvas: html.Canvas) extends Project("Parser", 50d) {
   def randomNumber = Random.nextInt(10).toString.head
   def randomOp = "+-*/" (Random.nextInt(4))
   type Value = Sum | BracketedSum | Char
@@ -40,11 +40,11 @@ case class Parser(canvas: html.Canvas) extends Project("Parser", 100d) {
   final val CentreBox2 = (Width*3/6d, HLine1Y + Height/6d + 5)
   final val CentreBox3 = (Width*5/6d, HLine1Y + Height/6d + 5)
   final val CentreBox4 = (Width*7/6d, HLine1Y + Height/6d + 5)
-  final val InitShift = Width/3d
-  final val InitDelay = Width/9d
+  final val ShiftPerFrame = 3d
+  final val InitShift = Width * ShiftPerFrame/9d
+  final val InitDelay = Width/12d
   var shiftX = 0d
   var delay = InitDelay
-  final val ShiftPerFrame = 3d
   var shiftMultiplier = 1
   def drawText(): Unit = {
     context.fillStyle = TextColour
@@ -64,7 +64,7 @@ case class Parser(canvas: html.Canvas) extends Project("Parser", 100d) {
         shiftX = 0
         delay -= 1
       } else {
-        if (Random.nextDouble < 0.8) {
+        if (Random.nextDouble < 0.9) {
           it += 1
           it %= (sumState.size+1)
           shiftMultiplier = 1
