@@ -3,23 +3,24 @@ import es.tmoor.scanvas._
 import es.tmoor.scanvas.rendering.Colour
 import org.scalajs.dom.raw.CanvasGradient
 import scala.util.Random
+import BoundingBox.BoundingBox
 
 object CPU extends Project("CPU", "cpu-box", 25d) {
   final val background = Colour(0x3b5b6c)
 
-  object PCB extends Template(CPU, context) {
+  object PCB extends SubTemplate {
     final val colour = Colour(0x556c23)
     final val relativeBounds = (0.25, 0.25, 0.5, 0.5)
 
-    object Heatsink extends Template(PCB, context) {
+    object Heatsink extends SubTemplate {
       final val colour = Colour(0xa8b0b5)
-      final val radius = bounds._3 * 6 / 50d
+      final val radius = width * 6 / 50d
 
-      object Label extends Template(Heatsink, context) {
+      object Label extends SubTemplate {
         final val colour = Colour(0x545e64)
-        final val fontSize = bounds._4 * 2 / 5d
+        final val fontSize = height * 2 / 5d
         final val font = s"${fontSize}px 'Lexend Exa', sans-serif"
-        def relativeBounds: BoundingBox.BoundingBox = (0.2, 0.2, 0.6, 0.6)
+        def relativeBounds: BoundingBox = (0.2, 0.2, 0.6, 0.6)
         def children: Seq[Template] = Nil
         def draw(): Unit = {
           context.Text.colour = colour
@@ -32,7 +33,7 @@ object CPU extends Project("CPU", "cpu-box", 25d) {
         }
       }
 
-      def relativeBounds: BoundingBox.BoundingBox =
+      def relativeBounds: BoundingBox =
         (1 / 12d, 1 / 12d, 5 / 6d, 5 / 6d)
       def children: Seq[Template] = Seq(Label)
       def draw(): Unit = {
@@ -47,13 +48,11 @@ object CPU extends Project("CPU", "cpu-box", 25d) {
       context.Fill.regularPoly(4, bounds)
     }
   }
-  abstract class Wire extends Template(CPU, context) {
+  abstract class Wire extends SubTemplate {
     var pulsePosition = 0d
     final val offColour = Colour(0xbcc4c4)
     final val onColour = Colour(0x45f6ff)
     final def normalThickness = 1 / 60d
-    final def relativeLength = 1 / 4d
-    def length: Double
     val pulseChance = 1 - 0.5d / tick
     final val increment = tick * 0.0025
     final def pulsing = pulsePosition > 0
@@ -76,15 +75,13 @@ object CPU extends Project("CPU", "cpu-box", 25d) {
       if (pulsing || Random.nextDouble() > pulseChance)
         pulsePosition += increment
     }
-    println(s"BB: $bounds")
   }
   case class HorizontalWire(x: Double, w: Double, y: Double) extends Wire {
-    final def length = relativeLength * parent.bounds._3.abs
-    final def thickness = relativeThickness * parent.bounds._4.abs
-    def relativeBounds: BoundingBox.BoundingBox = (x, y, w, y)
-    def p1: (Double, Double) = (bounds._1, bounds._2)
+    final def thickness = relativeThickness * parent.height.abs
+    def relativeBounds: BoundingBox = (x, y, w, y)
+    def p1: (Double, Double) = (x0, y0)
     def p2: (Double, Double) =
-      (bounds._1 + bounds._3, bounds._2)
+      (x0 + width, y0)
     def gradient: CanvasGradient = {
       context.Gradient(
         p1._1,
@@ -99,12 +96,10 @@ object CPU extends Project("CPU", "cpu-box", 25d) {
 
   }
   case class VerticalWire(y: Double, h: Double, x: Double) extends Wire {
-    final def length = relativeLength * parent.bounds._4.abs
-    final def thickness = relativeThickness * parent.bounds._3.abs
-    def relativeBounds: BoundingBox.BoundingBox = (x, y, x, h)
-    def p1: (Double, Double) = (bounds._1, bounds._2)
-    def p2: (Double, Double) =
-      (bounds._1, bounds._2 + bounds._4)
+    final def thickness = relativeThickness * parent.width.abs
+    def relativeBounds: BoundingBox = (x, y, x, h)
+    def p1: (Double, Double) = (x0, y0)
+    def p2: (Double, Double) = (x0, y0 + height)
     def gradient: CanvasGradient = {
       context.Gradient(
         p1._1,

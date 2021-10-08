@@ -3,8 +3,14 @@ import rendering.Context
 import BoundingBox._
 
 abstract class BaseTemplate {
+  abstract class SubTemplate extends Template(this, context)
   def relativeBounds: BoundingBox
   def bounds: BoundingBox
+  final def x0 = bounds._1
+  final def y0 = bounds._2
+  final def width = bounds._3
+  final def height = bounds._4
+  def context: Context
   def tick: Double
   def children: Seq[Template]
   def draw(): Unit

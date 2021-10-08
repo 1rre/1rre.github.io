@@ -3,12 +3,19 @@ package es.tmoor.scanvas.rendering
 import org.scalajs.dom.html
 import org.scalajs.dom.raw.{CanvasRenderingContext2D, CanvasGradient}
 import es.tmoor.scanvas.BoundingBox._
+import org.scalajs.dom.raw.HTMLImageElement
 
-class Context(c2d: CanvasRenderingContext2D) {
+class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
   def this(cnv: html.Canvas) =
     this(cnv.getContext("2d").asInstanceOf[CanvasRenderingContext2D])
 
   type Colour = String
+
+  def withOffset(offset: (Double, Double))(fn: => Unit) = {
+    c2d.translate(-offset._1, -offset._2)
+    fn
+    c2d.translate(offset._1, offset._2)
+  }
 
   def background = c2d.canvas.style.background
   def background_=(s: String) = c2d.canvas.style.background = s
@@ -59,7 +66,6 @@ class Context(c2d: CanvasRenderingContext2D) {
     def thickness_=(d: Double) = c2d.lineWidth = d
     def line(x1: Double, y1: Double, x2: Double, y2: Double) = {
       c2d.beginPath()
-      println(s"Line from $x1, $y1 to $x2, $y2")
       Trace.line(x1, y1, x2, y2)
       c2d.closePath()
       c2d.stroke()

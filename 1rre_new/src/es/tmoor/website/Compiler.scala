@@ -13,7 +13,7 @@ object Compiler extends Project("Compiler", "compiler-box", 100d) {
     def relativeBounds: BoundingBox = (0, 0, 1, splitAt)
     object Title extends Template(StatusBar, context) {
       final val colour = Colour(0x1c1f22)
-      def fontSize = bounds._4 / 2d
+      def fontSize = height / 2d
       def font = s"${fontSize}px 'Lexend Exa', sans-serif"
       def relativeBounds: BoundingBox.BoundingBox = (0.05, 0.05, 0.9, 0.9)
       def children: Seq[Template] = Nil
@@ -26,13 +26,13 @@ object Compiler extends Project("Compiler", "compiler-box", 100d) {
     object Close extends Template(StatusBar, context) {
       final val colour = Colour(0xe04747)
       final val crossColour = Colour(0xE5E5E5)
-      def centre = (bounds._1 + bounds._3 / 2d, bounds._2 + bounds._4 / 2d)
-      def thickness = bounds._3 min bounds._4 / 18d
+      def centre = (x0 + width / 2d, y0 + height / 2d)
+      def thickness = width min height / 18d
       def x1 = centre._1 + radius/2d
       def y1 = centre._2 + radius/2d
       def x2 = centre._1 - radius/2d
       def y2 = centre._2 - radius/2d
-      def radius = bounds._3 min bounds._4 * 3 / 8d
+      def radius = width min height * 3 / 8d
       def relativeBounds: BoundingBox = (1 - splitAt, 0, splitAt, 1)
 
       def children: Seq[Template] = Nil
@@ -59,7 +59,7 @@ object Compiler extends Project("Compiler", "compiler-box", 100d) {
     final val nRows = 16
     final val nCols = 30
     final val altColourThreshold = 0.825
-    def fontSize = bounds._3 / 20d
+    def fontSize = width / 20d
     def font = s"${fontSize}px 'Overpass Mono', monospace"
     def textColour =
       if (Random.nextDouble() > altColourThreshold) Colour(0xe04747)
@@ -76,8 +76,8 @@ object Compiler extends Project("Compiler", "compiler-box", 100d) {
     }
     def relativeBounds: BoundingBox = (0, splitAt, 1, 1 - splitAt)
     def children: Seq[Template] = Nil
-    def textOffsetX = bounds._3 * 0.025
-    def textOffsetY = bounds._4 * 0.03
+    def textOffsetX = width * 0.025
+    def textOffsetY = height * 0.03
     def draw(): Unit = {
       context.Fill.colour = colour
       context.Fill.regularPoly(4, bounds)
