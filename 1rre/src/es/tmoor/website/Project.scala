@@ -6,6 +6,6 @@ abstract class Project(val title: String, canvasName: String, tick: Double)
     extends SCanvas(canvasName, tick, Project.Width, Project.Height)
 
 object Project {
-  final val Width = 480
-  final val Height = 480
+  final val Width = 640
+  final val Height = 640
 }

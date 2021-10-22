@@ -10,11 +10,15 @@ class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
     this(cnv.getContext("2d").asInstanceOf[CanvasRenderingContext2D])
 
   type Colour = String
-
   def withOffset(offset: (Double, Double))(fn: => Unit) = {
     c2d.translate(-offset._1, -offset._2)
     fn
     c2d.translate(offset._1, offset._2)
+  }
+  def withRotation(r: Double)(fn: => Unit) = {
+    c2d.rotate(r)
+    fn
+    c2d.rotate(-r)
   }
 
   def background = c2d.canvas.style.background
@@ -38,6 +42,12 @@ class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
       c2d.fillText(s, x, y + h / 2)
     }
   }
+  object Glow {
+    def size = c2d.shadowBlur
+    def size_=(d: Double) = c2d.shadowBlur = d
+    def colour = c2d.shadowColor
+    def colour_=(c: Colour) = c2d.shadowColor = c
+  }
   object Fill {
     def colour = c2d.fillStyle
     def colour_=(c: Colour) = c2d.fillStyle = c
@@ -47,7 +57,12 @@ class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
       Trace.regularPoly(sides, bounds)
       c2d.fill()
     }
-    def circle(r: Double, centre: (Double,Double)) = {
+    def circle(b: BoundingBox) = {
+      c2d.beginPath()
+      Trace.circle(b)
+      c2d.fill()
+    }
+    def circle(r: Double, centre: (Double, Double)) = {
       c2d.beginPath()
       Trace.circle(r, centre)
       c2d.fill()
@@ -64,10 +79,25 @@ class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
     def colour_=(g: CanvasGradient) = c2d.strokeStyle = g
     def thickness = c2d.lineWidth
     def thickness_=(d: Double) = c2d.lineWidth = d
+    def dash = c2d.getLineDash()
+    def dash_=(onOff: (Double, Double)) = c2d.setLineDash(scalajs.js.Array(onOff._1, onOff._2))
+    def dash_=(nil: Nil.type) = c2d.setLineDash(scalajs.js.Array())
+    def dash_=(array: scalajs.js.Array[Double]) = c2d.setLineDash(array)
+    
     def line(x1: Double, y1: Double, x2: Double, y2: Double) = {
       c2d.beginPath()
       Trace.line(x1, y1, x2, y2)
       c2d.closePath()
+      c2d.stroke()
+    }
+    def circle(b: BoundingBox) = {
+      c2d.beginPath()
+      Trace.circle(b)
+      c2d.stroke()
+    }
+    def circle(r: Double, centre: (Double, Double)) = {
+      c2d.beginPath()
+      Trace.circle(r, centre)
       c2d.stroke()
     }
     def regularPoly(sides: Int, bounds: BoundingBox): Unit = {
@@ -107,6 +137,12 @@ class Context(private[rendering] val c2d: CanvasRenderingContext2D) {
       c2d.arc(x + r, y + h - r, r, math.Pi / 2, math.Pi)
       c2d.moveTo(x, y + r)
       c2d.arc(x + r, y + r, r, math.Pi, 3 * math.Pi / 2)
+    }
+    def circle(bounds: BoundingBox): Unit = {
+      val x = bounds._1 + bounds._3 / 2
+      val y = bounds._2 + bounds._4 / 2
+      val r = math.min(bounds._3 / 2, bounds._4 / 2)
+      c2d.arc(x, y, r, 0, 2 * math.Pi)
     }
     def circle(r: Double, centre: (Double, Double)): Unit = {
       val (x, y) = centre
