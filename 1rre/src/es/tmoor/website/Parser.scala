@@ -47,17 +47,15 @@ object Parser extends Project("Parser", "parser-box", 25d) {
       Array(' ', ' ', ' ', '(')
     }
   }
-  def isSign(ch: Char) = ch == '-' || ch == '+'
-  def isSignOk(ch1: Char, ch2: Char) = (ch2 == '-' || ch2 == '+') && (ch1 != '-' && ch1 != '+')
   def isValid: Boolean = {
     val ch1 = buffer(buffer.length - 2)
     val ch2 = buffer.last
     if (ch1 == ' ') true
     else if (ch1 == '0') (ops contains ch2) || (obCnt > 0 && ch2 == ')')
     else if (ch1.isDigit) ch2 != '(' && (obCnt > 0 || ch2 != ')')
-    else if (ch1 == '(') ch2 != ')' && (!(ops contains ch2) || isSign(ch2))
+    else if (ch1 == '(') ch2 != ')' && (!(ops contains ch2) || ch2 == '-')
     else if (ops contains ch1)
-      !(ops contains ch2) && ch2 != ')' || isSignOk(ch1, ch2)
+      !(ops contains ch2) && ch2 != ')' || ch2 == '-' && ch1 != '-'
     else if (ch1 == ')') (ops contains ch2) || obCnt > 0 && ch2 == ')'
     else sys.error(s"ch1 is $ch1")
   }
