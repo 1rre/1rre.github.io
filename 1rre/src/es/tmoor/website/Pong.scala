@@ -171,7 +171,7 @@ object Pong extends Project("Pong", "pong-box", 25d) {
       val dy = (Ball.y - y).abs
       val ballSpeed = math.hypot(Ball.dx, Ball.dy)
       val scaledDistance = 1 - math.pow(dy, movementScale)
-      math.max(maxDist, scaledDistance) * ballSpeed
+      math.min(maxDist, scaledDistance) * ballSpeed
     }
   }
   val railLeft = new HorizontalRail(padding)

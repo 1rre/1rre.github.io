@@ -51,8 +51,7 @@ object Parser extends Project("Parser", "parser-box", 25d) {
     val ch1 = buffer(buffer.length - 2)
     val ch2 = buffer.last
     if (ch1 == ' ') true
-    else if (ch1 == '0') (ops contains ch2) || (obCnt > 0 && ch2 == ')')
-    else if (ch1.isDigit) ch2 != '(' && (obCnt > 0 || ch2 != ')')
+    else if (ch1.isDigit && ch1 != '0') ch2 != '(' && (obCnt > 0 || ch2 != ')')
     else if (ch1 == '(') ch2 != ')' && (!(ops contains ch2) || ch2 == '-')
     else if (ops contains ch1)
       !(ops contains ch2) && ch2 != ')' || ch2 == '-' && ch1 != '-'
