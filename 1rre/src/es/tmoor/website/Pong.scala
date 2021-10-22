@@ -5,7 +5,7 @@ import es.tmoor.scanvas.rendering.Colour
 import es.tmoor.scanvas.BoundingBox.BoundingBox
 import util.Random
 
-object Pong extends Project("Pong", "pong-box", 50d) {
+object Pong extends Project("Pong", "pong-box", 25d) {
   final val colour = Colour(0)
   final val padding = 1 / 48d
   final val paddleThickness = 1 / 24d
@@ -14,14 +14,14 @@ object Pong extends Project("Pong", "pong-box", 50d) {
   final val textUpperColour = Colour(0x1a50f7)
   final val fontSize = width / 12d
   final val lineSpacing = fontSize * 0.25
-  final val maxSpeed = 0.025
   final val font = s"${fontSize}px 'Lexend Exa', sans-serif"
   object Ball extends SubTemplate {
     final val colour = Colour(0xffffff)
     final val radius = 0.02
-    final val initialSpeed = 0.6 / tick
+    final val initialSpeed = 0.012
+    final val maxSpeed = 0.025
     final val bounceEffect = 1 / 3d
-    final val delayInit = 10
+    final val delayInit = 10 * (50 / tick).toInt
     var delay = 0
     def initialise(): Unit = {
       dx = Random.between(-1d, 1d)
@@ -97,6 +97,7 @@ object Pong extends Project("Pong", "pong-box", 50d) {
     def relativeBounds: BoundingBox = (x - radius, y - radius, 2 * radius, 2 * radius)
     def children: Seq[Template] = Nil
     def draw(): Unit = {
+    println(s"Speed: ${math.hypot(dx, dy)}")
       if (delay > 0) delay -= 1
       else {
         context.Fill.colour = colour
