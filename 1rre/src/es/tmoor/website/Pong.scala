@@ -97,7 +97,6 @@ object Pong extends Project("Pong", "pong-box", 25d) {
     def relativeBounds: BoundingBox = (x - radius, y - radius, 2 * radius, 2 * radius)
     def children: Seq[Template] = Nil
     def draw(): Unit = {
-    println(s"Speed: ${math.hypot(dx, dy)}")
       if (delay > 0) delay -= 1
       else {
         context.Fill.colour = colour
