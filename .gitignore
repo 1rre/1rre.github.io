@@ -5,3 +5,4 @@ out/
 .scalafmt.conf
 Scalayout/
 test.html
+cargame.html
