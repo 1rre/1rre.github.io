@@ -12,7 +12,7 @@ object Parser extends Project("Parser", "parser-box", 25d) {
   final val textColour = Colour(0x7d7d7d)
   final val ops = "+-*/"
   final val fontSize = 0.3 * height
-  final val heightOffset = fontSize / 17
+  final val heightOffset = fontSize / 8
   final val boxWidth = width / 3d
   final val boxHeight = height / 3d
   final val rect =
