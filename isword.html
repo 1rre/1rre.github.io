@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wiktionary Definition Fetcher</title>
+</head>
+<body>
+  <h1>Wiktionary Definition Lookup</h1>
+  <input type="text" id="wordInput" placeholder="Enter a word">
+  <button onclick="fetchDefinition()">Get Definition</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function fetchDefinition() {
+      const word = document.getElementById('wordInput').value.trim();
+      const output = document.getElementById('output');
+
+      if (!word) {
+        output.textContent = 'Please enter a word.';
+        return;
+      }
+
+      const url = `https://en.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(word)}?redirect=false`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.en) {
+          out = []
+          for (let i = 0; i < data.en.length; i++) {
+            if (data.en[i].language == "English") {
+              console.log(JSON.stringify(data.en[i]));
+              for (let j = 0; j < data.en[i].definitions.length; j++) {
+                out.push(data.en[i].definitions[j].definition);
+              }
+            }
+          }
+          output.textContent = "Word:"
+          let innerHtml = "";
+          for (let i = 0; i < out.length; i++) {
+            let newNode = `<li>${out[i].trim()}</li>`;
+            innerHtml += newNode;
+            console.log(newNode);
+          }
+          output.innerHTML = `Word:<ul>${innerHtml}</ul>`;
+        } else {
+          output.textContent = "Not a word, Ming...";
+        }
+      } catch (error) {
+        output.textContent = `Error fetching definition: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
